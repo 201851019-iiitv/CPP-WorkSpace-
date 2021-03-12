@@ -1,0 +1,116 @@
+vector:
+
+
+it is mixture of array and linkedlist.
+
+declarations:
+
+vector<int>v;
+vector<int>v{1,2,3}
+vector<int>v={1,2,3}
+
+
+
+for use :
+
+simple storage
+Quick lookup by index
+Serialization
+efficient traversal
+
+don't use for 
+insertion deletion for middle element
+
+non integer indexing
+
+
+Time complextiy
+insertion head O(n)
+insertion index  O(n)
+insert tail O(1)
+Remove head O(n)
+Remove index O(n)
+Remove tail O(1)
+
+find object o(n)
+find index O(1)
+
+
+
+operation syntax
+
+insert at head
+v.insert(v.begin,value)
+insert at any index
+
+v.insert(v.begin()+index,value)  //index with 0
+
+insert at tail
+v.push_back(value)
+
+
+
+Acess the value :
+
+int head=v.front();
+
+int value =v.at(index) or v[index];
+int tail=v.back();
+
+int size=v.size();
+
+reverse the vector :
+reverse(v.begin(),v.end());
+
+
+
+//for traverse  
+for (auto x:v)
+cout<<x;
+
+
+or 
+vector<int>iterator it;
+for(it=v.begin();it!=v.end();it++)
+cout<<*it;
+
+
+//for binary search
+
+bool y=binary_search(v.begin(),v.end(),value);
+
+//lowerbound and upper bound
+
+
+auto lower=lower_bound(v.begin(),v.end(),value);
+
+auto upper=upper_bound(v.begin(),v.end(),value);
+
+//sort 
+
+v.sort(v.begin(),v.end());
+ you can use comprator 
+for sort a vector
+v.sort(v.begin(),v.end(),comparator);
+
+//erase and clear
+
+v.erase(v.begin());
+v.erase(v.begin()+index);  //indexing from 0
+
+v.pop_back();
+
+v.clear();
+
+
+size=0;
+
+
+alot much more function but these are important  .
+
+
+
+
+
+
+

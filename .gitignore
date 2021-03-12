@@ -1,0 +1,11 @@
+.cph/
+*.exe
+*.prob
+*.json
+.vscode/
+*.bin
+Sublime Text 3
+input.txt
+output.txt
+*.txt
+*.pdf
