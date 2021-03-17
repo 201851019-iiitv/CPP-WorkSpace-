@@ -96,6 +96,34 @@ cout<<count<<"\n";
 
 
 
+int getMinimumAnagramDifference(string &str1, string &str2)
+{
+    unordered_map<char,int>m;
+    unordered_map<char,int>m1;
+    int n=str1.length();
+    
+    for(int i=0;i<n;i++)
+    {
+        m[str1[i]]++;
+    }
+    for(int i=0;i<n;i++)
+    {
+        m1[str2[i]]++;
+    }
+  
+    int r1=0;
+    char c;
+    for(int i=0;i<26;i++)
+    {
+        c=char ('a'+i);
+        r1 +=abs(m[c]-m1[c]);
+        
+        
+    }
+    
+    return r1;
+    
+}
 
 
 int main() {
@@ -105,7 +133,10 @@ int main() {
     int t = 1;
     cin >> t;
     while(t--) {
-      solve();
+string s1,s2;
+cin>>s1>>s2;
+
+     cout<<getMinimumAnagramDifference(s1,s2)<<"\n";
     }
 
     return 0;

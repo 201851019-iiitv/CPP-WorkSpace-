@@ -21,9 +21,9 @@ using namespace std;
 #define F first
 #define S second
 #define all(x) x.begin(), x.end()
-#define set(x) memset(x,-1,sizeof(x))
+#define setv(x) memset(x,-1,sizeof(x))
 #define tot(arr) arr,arr+sizeof(arr)
-//#define set(x) memset(x, -1, sizeof(x))
+#define set(x) memset(x, -1, sizeof(x))
 #define sortall(x) sort(all(x))
 #define sorttot(arr) sort(tot(arr))
 #define tr(it, a) for(auto it = a.begin(); it != a.end(); it++)
@@ -46,130 +46,44 @@ int rng(int lim) {
 }
 
 const ll mod = 1000000007;
-//const int N = 3e5, M = N;
+const int N = 3e5, M = N;
 //=================================================================================================================================//
 
-void maxo(vector<ll>&v)
-{
-
-ll k=v[1]/2;
-k=min(k,v[0]);
-
-ll res=k*v[4];
-
-v[0]-=k;
-
-
-v[1] -=k*2;
-
-v[3]+=res;
-
-
-}
-
-void  cm(vector<ll>&v)
-{
-// deb("Helllo");
-// deb2(b,N);
-ll k=v[2]/3;
-
-k=min(k,v[0]);
-
-ll res=k*v[5];
-
-v[0] -=k;
-
-
-v[2] -=k*3;
-v[3] += res;
-
-}
-
-// milkcake cccc
-
-void ck(vector<ll>&v)
-{
-
-ll k=min(v[1],v[2]);
-k=min(k,v[0]);
-
-ll res=k*v[6];
-
-v[0] -=k;
-v[1] -=k;
-v[2] -=k;
-
-v[3]+=res;
-}
 
 void solve() {
-  ll i, j, n, egg,bar,a,b,c;
+  ll i, j, n, k;
+   in(n);
+
+ll arr[n][2];
+
+ll delay[n];
+
+fo(i,n)
+{
+    cin>>arr[i][0]>>arr[i][1];
+}
+
+fo(i,n)
+{
+    cin>>delay[i];
+}  
 
 
-cin>>n>>egg>>bar>>a>>b>>c;
-
-vector<ll>v={n,egg,bar,0,a,b,c};
-//vector<ll>v1={n,egg,bar,0,a,b,c};
-
-ll minres=INT_MAX;
-
-// let maxo ->1 and cm ->2 ck ->3
-    maxo(v);cm(v);ck(v);
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-v={n,egg,bar,0,a,b,c};
-maxo(v);ck(v);cm(v);    //132
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-  v={n,egg,bar,0,a,b,c};
-cm(v);maxo(v);ck(v);    //213
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
+ll res=0;
 
 
- v={n,egg,bar,0,a,b,c};
-cm(v);ck(v);  maxo(v);  //231
+fo(i,n)
+{
 
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-  v={n,egg,bar,0,a,b,c};
-ck(v);  maxo(v); cm(v);  //312
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-
- v={n,egg,bar,0,a,b,c};
-ck(v);  cm(v); maxo(v);   //321
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
+    k=ceil(arr[i][1]-arr[i][0])/2.0;
+    k +=delay[i]+arr[i][0];
+    res =max(k,arr[i][1]);
 
 
 
-if(minres==INT_MAX)
-cout<<-1<<"\n";
-else
-cout<<minres<<"\n";
+}
 
+cout<<res<<"\n";
 
 
 

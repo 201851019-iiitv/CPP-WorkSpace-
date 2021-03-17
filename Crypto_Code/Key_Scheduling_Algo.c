@@ -24,37 +24,20 @@ static ul s_box[256] = {
 
 
 static ul RCon[10]={0x01000000,0x02000000,0x04000000,0x08000000,0x10000000,0x20000000,0x40000000,0x80000000,0x1B000000,0x36000000};
-
+//int mask=0xFF;  // for  8 bit
 ul rotward(ul n)
 {
 
-
-int b0,b1,b2,b3;
-
-b3=(n&255);
-n=(n>>8);
-b2=(n&255);
-n=(n>>8);
-b1=(n&255);
-b0=(n>>8);
+ul res=0;
 
 
-int temp=b0;
-b0=b1;
-b1=b2;
-b2=b3;
-b3=temp;
+/// w=b3b2b1b0
+/// w=b2b1b0b3.
 
 
-ul res=b0;
-res=(res<<8);
-res=(res|b1);
-res=(res<<8);
-res=(res|b2);
-res=(res<<8);
-res=(res|b3);
+ul b3=((0xFF<<24)&n);  // this b3
 
-
+res =((n<<8)|b3);
 return res;
 
 }
@@ -62,38 +45,15 @@ return res;
 
 ul subword(ul n)
 {
- int b0,b1,b2,b3;
+ ul b0,b1,b2,b3,res=0;
+
+b0=s_box[(n&0xFF)];
+b1=(s_box[((n>>8)&0xFF)]<<8);
+b2=(s_box[((n>>16)&0xFF)]<<16);
+b3=(s_box[((n>>24)&0xFF)]<<24);
 
 
-b3=(n&255);
-n=(n>>8);
-b2=(n&255);
-n=(n>>8);
-b1=(n&255);
-b0=(n>>8);
-
-int row,col;
-col=(b0&15);
-row=(b0>>4);
-ul b00=s_box[row*16+col];
-col=(b1&15);
-row=(b1>>4);
-ul b10=s_box[row*16+col];
-col=(b2&15);
-row=(b2>>4);
-ul b20=s_box[row*16+col];
-col=(b3&15);
-row=(b3>>4);
-int b30=s_box[row*16+col];
-
-
-ul res=b00;
-res=(res<<8);
-res=(res|b10);
-res=(res<<8);
-res=(res|b20);
-res=(res<<8);
-res=(res|b30);
+res=(b0|b1|b2|b3);
 
 return res;
 
@@ -119,28 +79,26 @@ ul w[44];
 for(int i=0;i<4;i++)
 {
 
-w[i]=key[4*i];
-
-w[i]=((w[i]<<8)|key[(4*i)+1]);
-w[i]=((w[i]<<8)|key[(4*i)+2]);
-w[i]=((w[i]<<8)|key[(4*i)+3]);
-
+w[i]=((key[4*i]<<24)|(key[4*i+1]<<16)|(key[4*i+2]<<8)|(key[4*i+3]));
 }
 
 
 ul temp=0;
-for(int i=4;i<44;i++)
+for(int i=4;i<44;i++ )
 {
-
 temp=w[i-1];
 
 if(i%4==0)
 {
+	//printf("%d",temp);
     temp=((subword(rotward(temp)))^RCon[i/4]);
+
 }
 
 
 w[i]=(w[i-4]^temp);
+
+//printf("W %x\t%x\n",i,w[i]);
 
 }
 
@@ -153,20 +111,16 @@ for(int i = 0; i <44; i++)
     }
 
 
-ul k[11];
-
 int j=0;
 for(int i=0;i<11;i++)
 {
-k[i]=(w[j]|w[j+1]|w[j+2]|w[j+3]);
+
+printf("Key%d \t%x%x%x%x\n",i+1,w[j],w[j+1],w[j+2],w[j+3]);
+
 j +=4;
 
 }
 
-for(int i=0;i<11;i++)
-{
-    printf("Key%d \t%x\n",i+1,k[i]);
-}
 
 
 

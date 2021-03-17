@@ -9,6 +9,11 @@ int main()
         scanf("%x", &arr[i]);
     }
 
+for(int i=0;i<4;i++)
+printf("%x\t ",arr[i]);
+printf("\n");
+
+
     ul res[4][4];
 
     printf("Before shift :\n");
