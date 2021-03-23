@@ -189,12 +189,47 @@ uint8_t multiply_x(uint8_t n) {
 
 }
 
+// void print(uint8_t roundkeys[])
+// {
 
-void Aes(uint8_t plain[], uint8_t key[])
+// for(int i=0;i<176;i+=16)
+// {
+
+// for(int j=0;j<16;j++)
+// {
+//   printf("%x ",roundkeys[i+j]);
+
+// }
+// printf("\n");
+
+// }
+
+
+
+
+
+//}
+
+// void print(uint8_t c[])
+// {
+
+//   for (int i = 0; i < 16; i++)
+//   {
+//     printf("%x ", c[i]);
+//   }
+
+//   printf("\n");
+
+// }
+
+
+void Aes(uint8_t *plain, uint8_t *key)
 {
 
   uint8_t cipherText[16];
   int local = 0;
+
+
 
   /*
 
@@ -210,6 +245,8 @@ void Aes(uint8_t plain[], uint8_t key[])
 
   Key_Schedule(key, roundkeys); /// this create all  11 keys(each keys contain 16 values 8 bits);
 
+  //print(roundkeys);
+
 
   /*
   Add  for first Round Key :
@@ -217,8 +254,17 @@ void Aes(uint8_t plain[], uint8_t key[])
 
   */
 
-  for (int i = 0; i < 16; i++)
-    cipherText[i] = plain[i] ^ roundkeys[local++];
+
+  for (int i = 0; i < 16; i++, local++)
+  {
+
+    uint8_t ss = plain[i] ^ roundkeys[local];
+    //printf("pl: %x roundkeys :%x  ss:%x \n", plain[i], roundkeys[i], ss);
+    cipherText[i] = (plain[i] ^ roundkeys[local]);
+  }
+
+
+
 
 
 //-------------------------
@@ -242,9 +288,12 @@ void Aes(uint8_t plain[], uint8_t key[])
     for (int i = 0; i < 16; i++)
       temp[i] = s_box[cipherText[i]];
 
+
+
 // shift rows
 
     ShiftRows(temp);
+
 
 
 
@@ -261,13 +310,20 @@ void Aes(uint8_t plain[], uint8_t key[])
 
     }
 
+    // printf("Hello \n");
+    // print(cipherText);
+
 
 
 
 // Add round key
 
-    for (int i = 0; i < 16; i++)
-      cipherText[i] ^= roundkeys[local++];
+    for (int i = 0; i < 16; i++, local++)
+      cipherText[i] ^= roundkeys[local];
+
+    // printf("Hello \n");
+    // print(cipherText);
+
 
 
     printf("Round%d : ", round);
@@ -312,27 +368,31 @@ int  main()
 {
 
 
-  uint8_t plain[16];
+  uint8_t plain_text[16] = {0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d, 0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34 };
+  uint8_t keyV[16] =       {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0x0a, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
 
-  printf("Enter the plain text all are 8 bit 16 values :\n");
+  // printf("Enter the plain text all are 8 bit 16 values :\n");
 
-  for (int i = 0; i < 16; i++)
-  {
-    scanf("%x", &plain[i]);
-  }
-
-
-  uint8_t key[16];
-
-  printf("Enter the secret key  all are 8-bit 16 values :\n");
-
-  for (int i = 0; i < 16; i++)
-  {
-    scanf("%x", &key[i]);
-  }
+  //   for (int i = 0; i < 16; i++)
+  //   {
+  //     scanf("%x", &plain_text[i]);
+  //   }
 
 
-  Aes(plain, key);
+  //   print(plain_text);
+
+
+
+  // printf("Enter the secret key  all are 8-bit 16 values :\n");
+
+  // for (int i = 0; i < 16; i++)
+  // {
+  //   scanf("%x", &keyV[i]);
+  // }
+
+  // print(plain_text);
+
+  Aes(plain_text, keyV);
 
   return 0;
 }
