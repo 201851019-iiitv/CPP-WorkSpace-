@@ -79,7 +79,7 @@ void union_value(ll a, ll b, vector<node> &dsuf)
 //    b = find_Absolute_Parent(b, dsuf);
  
 
-deb2(a,b);
+//deb2(a,b);
 
   if (dsuf[a].rank == dsuf[b].rank)
   {
@@ -102,8 +102,6 @@ deb2(a,b);
 void solve()
 {
     ll i, j, n, k, m;
-
-  //cout << "Enter the number of vertex and number of edge:\n";
   cin >> n>>m;
 
   vector<Edge> edge;    
@@ -130,6 +128,7 @@ fo(i,m)
 
   while (i < m )
   {
+     
     ll absolut_Parent_of_intial = find_Absolute_Parent(edge[i].intial, dsuf);
 
     ll absolut_Parent_of_end = find_Absolute_Parent(edge[i].end, dsuf);
@@ -138,29 +137,26 @@ fo(i,m)
 
     if (absolut_Parent_of_intial != absolut_Parent_of_end) // if both absolute parent are same then they will form a cycle
     {
-      deb2(edge[i].intial,edge[i].end);
-
-    
+      //deb2(edge[i].intial,edge[i].end);
       union_value(absolut_Parent_of_intial, absolut_Parent_of_end, dsuf);
-      deb2(absolut_Parent_of_intial,absolut_Parent_of_end);
+      //deb2(absolut_Parent_of_intial,absolut_Parent_of_end);
     
     }
     
     i++;
   }
 
+ //deb(i);
 
 
 
+for(i=1;i<=n;i++)
+{
+    //deb(i);
+   find_Absolute_Parent(i,dsuf);
+//dsuf[i].parent=k;
 
-// for(i=1;i<=n;i++)
-// {
-
-//   if(dsuf[i].parent==-1)
-//     dsuf[i].parent=i;
-
-// }
-
+}
 
 
 
@@ -168,9 +164,20 @@ fo(i,m)
 for(i=1;i<=n;i++)
 {
 
-  cout<<dsuf[i].parent<<"\n";
+   if(dsuf[i].parent==-1)
+   dsuf[i].parent=i;
 
 }
+
+
+// for(i=1;i<=n;i++)
+// {
+
+//   cout<<dsuf[i].parent<<" ";
+
+// }
+// cout<<"\n";
+
 
 unordered_map<ll,ll>mp;
 

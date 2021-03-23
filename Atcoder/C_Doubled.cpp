@@ -1,7 +1,6 @@
 // Created by  Ambesh kumar
 #include "bits/stdc++.h"
 
-
 //I already compile this file in my computer system to save the time
 //if get the compiler error then you should change this header to
 // #include "bits/stdc++.h"  ---> #include <bits/stdc++.h>
@@ -22,9 +21,9 @@ using namespace std;
 #define F first
 #define S second
 #define all(x) x.begin(), x.end()
-#define set(x) memset(x,-1,sizeof(x))
+#define setv(x) memset(x,-1,sizeof(x))
 #define tot(arr) arr,arr+sizeof(arr)
-//#define set(x) memset(x, -1, sizeof(x))
+#define set(x) memset(x, -1, sizeof(x))
 #define sortall(x) sort(all(x))
 #define sorttot(arr) sort(tot(arr))
 #define tr(it, a) for(auto it = a.begin(); it != a.end(); it++)
@@ -47,129 +46,41 @@ int rng(int lim) {
 }
 
 const ll mod = 1000000007;
-//const int N = 3e5, M = N;
+const int N = 3e5, M = N;
 //=================================================================================================================================//
 
-void maxo(vector<ll>&v)
-{
-
-ll k=v[1]/2;
-k=min(k,v[0]);
-
-ll res=k*v[4];
-
-v[0]-=k;
-
-
-v[1] -=k*2;
-
-v[3]+=res;
-
-
-}
-
-void  cm(vector<ll>&v)
-{
-// deb("Helllo");
-// deb2(b,N);
-ll k=v[2]/3;
-
-k=min(k,v[0]);
-
-ll res=k*v[5];
-
-v[0] -=k;
-
-
-v[2] -=k*3;
-v[3] += res;
-
-}
-
-// milkcake cccc
-
-void ck(vector<ll>&v)
-{
-
-ll k=min(v[1],v[2]);
-k=min(k,v[0]);
-
-ll res=k*v[6];
-
-v[0] -=k;
-v[1] -=k;
-v[2] -=k;
-
-v[3]+=res;
-}
 
 void solve() {
-  ll i, j, n, egg,bar,a,b,c;
+  ll i, j, n, k;
+   in(n);
 
+  k=log10(n)+1;
 
-cin>>n>>egg>>bar>>a>>b>>c;
+ i=2;
+ ll power=9;
 
-vector<ll>v={n,egg,bar,0,a,b,c};
-//vector<ll>v1={n,egg,bar,0,a,b,c};
+ ll count=0;
 
-ll minres=INT_MAX;
+ while(i<k)
+ {
+    
+  count +=power;
 
-// let maxo ->1 and cm ->2 ck ->3
-    maxo(v);cm(v);ck(v);
+  i *=2;
+  power *=9;
+ }
 
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
+ if(i==k)
+ {
 
-v={n,egg,bar,0,a,b,c};
-maxo(v);ck(v);cm(v);    //132
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-  v={n,egg,bar,0,a,b,c};
-cm(v);maxo(v);ck(v);    //213
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
   }
 
 
- v={n,egg,bar,0,a,b,c};
-cm(v);ck(v);  maxo(v);  //231
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-  v={n,egg,bar,0,a,b,c};
-ck(v);  maxo(v); cm(v);  //312
-
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
+  
 
 
- v={n,egg,bar,0,a,b,c};
-ck(v);  cm(v); maxo(v);   //321
+prt(count);
 
-  if(v[0]==0)
-  {
-      minres=min(minres,v[3]);
-  }
-
-
-
-if(minres==INT_MAX)
-cout<<-1<<"\n";
-else
-cout<<minres<<"\n";
 
 
 
@@ -180,8 +91,10 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
+
+       
       solve();
     }
 
