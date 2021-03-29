@@ -1,68 +1,40 @@
-// Created by  Ambesh kumar
-#include "bits/stdc++.h"
+/*
+----------------------------------------------------------------------------
+        Name:Ambesh Kumar(201851019)
+        Name:Ankur Chanderia(201851023)
+        Name:Deepak Bethamalla(201851033)
+----------------------------------------------------------------------------
+*/
 
-//I already compile this file in my computer system to save the time
-//if get the compiler error then you should change this header to
-// #include "bits/stdc++.h"  ---> #include <bits/stdc++.h>
-
-using namespace std;
-#define fo(i, n) for (i = 0; i < n; i++)
-#define foo(i, k, n) for (i = k; i < n; i++)
-#define Fo(i, k, n) for (i = n - 1; i >= k; i--)
+#include <bits/stdc++.h>
 #define ll long long
-#define in(x) cin >> x
-#define prt(x) cout << x << "\n"
-#define prt2(x, y) cout << x << " " << y << "\n"
-#define prt3(x, y, z) cout << x << " " << y << " " << z << "\n"
+
+/// This define function used only for debugging purpose
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
-#define pb push_back
-#define pr make_pair
-#define F first
-#define S second
-#define all(x) x.begin(), x.end()
-#define setv(x) memset(x, -1, sizeof(x))
-#define tot(arr) arr, arr + sizeof(arr)
-#define set(x) memset(x, -1, sizeof(x))
-#define sortall(x) sort(all(x))
-#define sorttot(arr) sort(tot(arr))
-#define tr(it, a) for (auto it = a.begin(); it != a.end(); it++)
-#define PI 3.1415926535897932384626
-typedef pair<int, int> pi;
-typedef pair<ll, ll> pl;
-typedef vector<int> vi;
-typedef vector<ll> vl;
-typedef unordered_map<ll, ll> mp;
-typedef unordered_map<char, ll> mc;
-typedef unordered_map<ll, bool> mb;
-typedef vector<pi> vpi;
-typedef vector<pl> vpl;
-typedef vector<vi> vvi;
-typedef vector<vl> vvl;
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim)
-{
-    uniform_int_distribution<int> uid(0, lim - 1);
-    return uid(rang);
-}
 
-const ll mod = 1000000007;
-const int N = 3e5, M = N;
-//=================================================================================================================================//
-
+using namespace std;
 
 struct Edge
 {
- ll intial, end;
+  ll intial, end, wt;
 };
 
 struct node
 {
- ll parent, rank;
+ ll  parent, rank;
 };
 
+bool sortfun(Edge &a, Edge &b)
+{
 
-ll find_Absolute_Parent(ll vertex, vector<node> &dsuf)
+  return a.wt < b.wt;
+}
+
+
+vector<Edge> mst;
+
+ll find_Absolute_Parent(int vertex, vector<node> &dsuf)
 {
   if (dsuf[vertex].parent == -1)
     return vertex;
@@ -70,16 +42,8 @@ ll find_Absolute_Parent(ll vertex, vector<node> &dsuf)
   return dsuf[vertex].parent = find_Absolute_Parent(dsuf[vertex].parent, dsuf);
 }
 
-void union_value(ll a, ll b, vector<node> &dsuf)
+void union_value(int a, int b, vector<node> &dsuf)
 {
-
-
-// a = find_Absolute_Parent(a, dsuf);
-
-//    b = find_Absolute_Parent(b, dsuf);
- 
-
-//deb2(a,b);
 
   if (dsuf[a].rank == dsuf[b].rank)
   {
@@ -99,129 +63,97 @@ void union_value(ll a, ll b, vector<node> &dsuf)
 
 
 
-void solve()
+
+
+bool fun(Edge &a,Edge &b)
 {
-    ll i, j, n, k, m;
-  cin >> n>>m;
-
-  vector<Edge> edge;    
-
-vector<node>dsuf;
-
-dsuf.resize(n+1);
-	for(int i=1;i<=n;++i)	
-	{
-		dsuf[i].parent=-1;
-		dsuf[i].rank=0;
-	}
-
-fo(i,m)
-{
-
-    cin>>j>>k;
-
- edge.push_back({j,k});
-    
+  return a.intial<b.intial;
 }
 
- i = 0;
+void printmst()
+{
+  sort(mst.begin(),mst.end(),fun);
+  cout<<"============================================================\n";
+	for(auto p: mst)
+		cout<<"intial_vertex: "<<p.intial<<" end_vertex: "<<p.end<<"  wt: "<<p.wt<<"\n";
+	cout<<"============================================================\n";
+}
 
-  while (i < m )
+
+int main()
+{
+
+  ll number_of_vertex, number_of_edge;
+
+  //cout << "Enter the number of vertex and number of edge:\n";
+  cin >> number_of_vertex >> number_of_edge;
+
+  vector<Edge> edge;                                    //it store cost as well as starting point and ending point;
+  //unordered_map<int, unordered_map<int, bool>> visited; // for remove of parallel edge and consider min cost between them.
+  int a, b, c;
+  //cout << "Enter the start node end node (b/w 0-" << number_of_vertex - 1 << ")and weight \n";
+  for (int i = 0; i < number_of_edge; i++)
   {
-     
-    ll absolut_Parent_of_intial = find_Absolute_Parent(edge[i].intial, dsuf);
 
-    ll absolut_Parent_of_end = find_Absolute_Parent(edge[i].end, dsuf);
+    cin >> a >> b >> c;
 
+
+   a--;b--;
+      edge.push_back({a, b, c});
     
+  }
+
+  sort(edge.begin(), edge.end(), sortfun); // sort on basis of weight of edges.
+
+  // for(int i=0;i<edge.size();i++)
+  // cout<<edge[i].intial<<" "<<edge[i].end<<" "<<edge[i].wt<<"\n";
+
+  vector<node> dsuf(number_of_vertex, {-1, 0}); //make track of absolute parent node as well as rank of a node.Intialize parent is -1 and rank 0.
+
+  // max  edge in minimum spanning is only number_of_vertex-1
+
+  ll i = 0, count = 0;
+
+  while (i < number_of_edge && count < (number_of_vertex - 1))
+  {
+    int absolut_Parent_of_intial = find_Absolute_Parent(edge[i].intial, dsuf);
+
+    int absolut_Parent_of_end = find_Absolute_Parent(edge[i].end, dsuf);
 
     if (absolut_Parent_of_intial != absolut_Parent_of_end) // if both absolute parent are same then they will form a cycle
     {
-      //deb2(edge[i].intial,edge[i].end);
       union_value(absolut_Parent_of_intial, absolut_Parent_of_end, dsuf);
-      //deb2(absolut_Parent_of_intial,absolut_Parent_of_end);
-    
+      count++;
+      mst.push_back(edge[i]);
     }
-    
     i++;
   }
 
- //deb(i);
 
+printmst();
+  unordered_map<ll,bool>mp;
 
-
-for(i=1;i<=n;i++)
-{
-    //deb(i);
-   find_Absolute_Parent(i,dsuf);
-//dsuf[i].parent=k;
-
-}
-
-
-
-
-for(i=1;i<=n;i++)
-{
-
-   if(dsuf[i].parent==-1)
-   dsuf[i].parent=i;
-
-}
-
-
-// for(i=1;i<=n;i++)
-// {
-
-//   cout<<dsuf[i].parent<<" ";
-
-// }
-// cout<<"\n";
-
-
-unordered_map<ll,ll>mp;
-
-for(i=1;i<=n;i++)
-{
-
-   mp[dsuf[i].parent]++;
-
-}
-
-ll res=0;
-
-for(auto &x:mp)
-{
-
-for(auto &y:mp)
-{
-  if(x.first!=y.first)
+  for(i=0;i<mst.size();i++)
   {
-   res +=x.second*y.second;
+
+      mp[mst[i].intial]=true;
+      mp[mst[i].end]=true;
+
+  }
+
+  for(i=0;i<number_of_vertex;i++)
+  {
+      if(mp[i])
+      cout<<"all"<<"\n";
+      else
+      cout<<"none"<<"\n";
+
 
   }
 
 
-}
-
-}
-
-cout<<res<<"\n";
-
+ 
 
 
 }
-int main()
-{
-    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    int test = 1;
-    cin >> test;
-    while (test--)
-    {
-        solve();
-    }
-
-    return 0;
-}

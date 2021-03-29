@@ -96,7 +96,7 @@ int main()
   vector<Edge> edge;                                    //it store cost as well as starting point and ending point;
   unordered_map<int, unordered_map<int, bool>> visited; // for remove of parallel edge and consider min cost between them.
   int a, b, c;
-  cout << "Enter the start node end node (b/w 0-" << number_of_vertex - 1 << ")and weight \n";
+  cout << "Enter the start node end node (b/w 1-" << number_of_vertex << ")and weight \n";
   for (int i = 0; i < number_of_edge; i++)
   {
 

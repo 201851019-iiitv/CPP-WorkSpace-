@@ -31,54 +31,38 @@ uint8_t s_box[256] = {
     0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
     0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16};
 
-void ShiftRows(uint8_t *plainText) // We have total 16 values in array(all are 8-bit);
+void ShiftRows(uint8_t *state) // We have total 16 values in array(all are 8-bit);
 {
 
-  /*
-  Shift Rows :
-   *  Row0: s0  s4  s8  s12   << 0 byte
-   *  Row1: s1  s5  s9  s13   << 1 byte
-   *  Row2: s2  s6  s10 s14   << 2 bytes
-   *  Row3: s3  s7  s11 s15   << 3 bytes
-  [s0 s4 s8 s12 ]                 [s0 s4 s8 s12 ]
-  [s1 s5  s9 s13]    ---->        [s5 s9 s13 s1 ]
-  [s2 s6 s10 s14]                 [s10 s14 s2 s6]
-  [s3 s7 s11 s15]                 [s15 s3 s7 s11]
-
-   */
-
-  uint8_t temp[16];
-
-  temp[0] = plainText[0];
-  temp[1] = plainText[5];
-  temp[2] = plainText[10];
-  temp[3] = plainText[15];
-  temp[4] = plainText[4];
-  temp[5] = plainText[9];
-  temp[6] = plainText[14];
-  temp[7] = plainText[3];
-  temp[8] = plainText[8];
-  temp[9] = plainText[13];
-  temp[10] = plainText[2];
-  temp[11] = plainText[7];
-  temp[12] = plainText[12];
-  temp[13] = plainText[1];
-  temp[14] = plainText[6];
-  temp[15] = plainText[11];
-
-  for (int i = 0; i < 16; i++)
-  {
-    plainText[i] = temp[i];
-  }
+  uint8_t temp;
+ temp        = *(state+1);
+    *(state+1)  = *(state+5);
+    *(state+5)  = *(state+9);
+    *(state+9)  = *(state+13);
+    *(state+13) = temp;
+    // row2
+    temp        = *(state+2);
+    *(state+2)  = *(state+10);
+    *(state+10) = temp;
+    temp        = *(state+6);
+    *(state+6)  = *(state+14);
+    *(state+14) = temp;
+    // row3
+    temp        = *(state+15);
+    *(state+15) = *(state+11);
+    *(state+11) = *(state+7);
+    *(state+7)  = *(state+3);
+    *(state+3)  = temp;
 }
 
 uint32_t rotward(uint32_t n)
 {
 
-  /// if n=b0b1b2b3;
-  // then after rotward we should get =b1b2b3b0;
+  
+ul b3=((0xFF<<24)&n);  // this b3
 
-  return ((n << 8) | (n >> 24));
+ul res =((n<<8)|b3);
+return res;
 }
 
 uint32_t subword(uint32_t n)
@@ -119,7 +103,7 @@ void Key_Schedule(uint8_t *key, uint8_t *roundkeys)
       //  temp=(subword(temp));
       // printf("sub %x\n",temp);
 
-      temp = ((subword((rotward(temp)))) ^ R_Con[i / 4 - 1]);
+      temp = ((subword((rotward(temp)))) ^ R_Con[i / 4]);
       //printf("%x\n",temp);
     }
 
@@ -153,17 +137,8 @@ void Key_Schedule(uint8_t *key, uint8_t *roundkeys)
     }
   }
 }
-
-uint8_t multiply_x(uint8_t n)
-{
-
-  if ((n & (1 << 7)) == 0)
-  {
-
-    return n << 1;
-  }
-
-  return ((n << 1) ^ 0x1b);
+static inline uint8_t mul2(uint8_t a) {
+    return (a&0x80) ? ((a<<1)^0x1b) : (a<<1);
 }
 
 void print(uint8_t c[])
@@ -231,7 +206,7 @@ void Aes(uint8_t *plain, uint8_t *key)
 
   */
 
-  uint8_t temp[16], t;
+  uint8_t tmp[16], t;
 
   for (int round = 1; round < 10; round++)
   {
@@ -239,21 +214,29 @@ void Aes(uint8_t *plain, uint8_t *key)
     // sub bytes
 
     for (int i = 0; i < 16; i++)
-      temp[i] = s_box[cipherText[i]];
+      tmp[i] = s_box[cipherText[i]];
 
     // shift rows
 
-    ShiftRows(temp);
+    ShiftRows(tmp);
 
     // Mix Column
 
     for (int i = 0; i < 16; i += 4)
     {
 
-      cipherText[i] = (multiply_x(temp[i]) ^ multiply_x(temp[i + 1]) ^ temp[i + 1] ^ temp[i + 2] ^ temp[i + 3]);     //01123
-      cipherText[i + 1] = (multiply_x(temp[i + 1]) ^ multiply_x(temp[i + 2]) ^ temp[i + 2] ^ temp[i + 3] ^ temp[i]); //12230
-      cipherText[i + 2] = (multiply_x(temp[i + 2]) ^ multiply_x(temp[i + 3]) ^ temp[i + 3] ^ temp[i + 1] ^ temp[i]); //23301
-      cipherText[i + 3] = (multiply_x(temp[i + 3]) ^ multiply_x(temp[i]) ^ temp[i] ^ temp[i + 1] ^ temp[i + 2]);     //30012
+      t = tmp[i] ^ tmp[i+1] ^ tmp[i+2] ^ tmp[i+3];
+            plain[i]   = t ^ tmp[i]   ^ mul2(tmp[i]   ^ tmp[i+1]);
+            plain[i+1] = t ^ tmp[i+1] ^ mul2(tmp[i+1] ^ tmp[i+2]);
+            plain[i+2] = t ^ tmp[i+2] ^ mul2(tmp[i+2] ^ tmp[i+3]);
+            plain[i+3] = t ^ tmp[i+3] ^ mul2(tmp[i+3] ^ tmp[i]);
+           ul  u = mul2(mul2(tmp[i]   ^ tmp[i+2]));
+           ul  v = mul2(mul2(tmp[i+1] ^ tmp[i+3]));
+            ul t = mul2(u ^ v);
+            plain[i]   ^= t ^ u;
+            plain[i+1] ^= t ^ v;
+            plain[i+2] ^= t ^ u;
+            plain[i+3] ^= t ^ v;   //30012
     }
 
     // Add round key
@@ -307,28 +290,15 @@ int main()
 
   for (int i = 0; i < 16; i++)
   {
-    scanf("%x", &plain[i]);
-  }
-
-  // change hexadecimal input to 8-bit.
-  for (int i = 0; i < 16; i++)
-  {
-    plain_text[i] = plain[i];
+    scanf("%x", &plain_text[i]);
   }
 
   printf("Enter the secret key  all are 8-bit 16 values :\n");
 
   for (int i = 0; i < 16; i++)
   {
-    scanf("%x", &key[i]);
+    scanf("%x", &keyV[i]);
   }
-
-  // change hexadecimal input to 8-bit.
-  for (int i = 0; i < 16; i++)
-  {
-    keyV[i] = key[i];
-  }
-
   Aes(plain_text, keyV);
 
   return 0;

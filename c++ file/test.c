@@ -8,6 +8,7 @@
 int number=1;
 srand(time(0));
 int n=(rand()%100)+1  ; //1----100
+
 int num;
 printf("Enter the Your Guess number Between 1 to 100 \n");
 do
@@ -15,7 +16,6 @@ do
 
 
 scanf("%d",&num);
-
 if(num>n)
 printf(" Please Enter the lower number !! \n");
 else if(num<n)
