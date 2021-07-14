@@ -207,8 +207,6 @@ void Aes(uint8_t *plain, uint8_t *key)
 
   for (int i = 0; i < 16; i++, local++)
   {
-
-    uint8_t ss = plain[i] ^ roundkeys[local];
     //printf("pl: %x roundkeys :%x  ss:%x \n", plain[i], roundkeys[i], ss);
     cipherText[i] = (plain[i] ^ roundkeys[local]);
   }
@@ -231,7 +229,7 @@ void Aes(uint8_t *plain, uint8_t *key)
 
   */
 
-  uint8_t temp[16], t;
+  uint8_t temp[16];
 
   for (int round = 1; round < 10; round++)
   {
@@ -288,48 +286,17 @@ void Aes(uint8_t *plain, uint8_t *key)
   for (int i = 0; i < 16; i++)
     cipherText[i] ^= roundkeys[local++];
 
-printf("Encryption :");
+printf("Encrypted Ciphertext from alice  :");
   for (int i = 0; i < 16; i++)
     printf("%x ", cipherText[i]);
   printf("\n");
+
+ AES_Decryption(roundkeys,cipherText);
+
+
+
+// *completed task till  point 12.
+
 }
 
-int main()
-{
 
-  char plain[16];
-  char key[16];
-
-  uint8_t plain_text[16] = {0};
-  uint8_t keyV[16] = {0};
-
-  printf("Enter the plain text all are 8 bit 16 values :\n");
-
-  for (int i = 0; i < 16; i++)
-  {
-    scanf("%x", &plain[i]);
-  }
-
-  // change hexadecimal input to 8-bit.
-  for (int i = 0; i < 16; i++)
-  {
-    plain_text[i] = plain[i];
-  }
-
-  printf("Enter the secret key  all are 8-bit 16 values :\n");
-
-  for (int i = 0; i < 16; i++)
-  {
-    scanf("%x", &key[i]);
-  }
-
-  // change hexadecimal input to 8-bit.
-  for (int i = 0; i < 16; i++)
-  {
-    keyV[i] = key[i];
-  }
-
-  Aes(plain_text, keyV);
-
-  return 0;
-}
