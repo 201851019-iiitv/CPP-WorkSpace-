@@ -49,12 +49,34 @@ const ll mod = 1000000007;
 const int N = 3e5, M = N;
 //=================================================================================================================================//
 
+vector<ll>prime(15);
+
+void seive()
+{
+
+
+    
+}
+
+
 
 void solve() {
   ll i, j, n, k;
    in(n);
 
+for(i=14;i>=1;i--)
+{
+   k=prime[i]*prime[i-1];
+
+   if(k<=n)
+   {
+       cout<<k<<"\n";
+       return;
+   }
+
+}
   
+
 
 
 
@@ -64,10 +86,15 @@ int main() {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    int test = 1;
+ prime={2,3,5,7,11,13,17,19,23,29,31,37,41,43,47};
+
+    int test = 1,j=1;
     cin >> test;
     while(test--) {
-      solve();
+       cout<<"Case #"<<j<<":"<<" " ;
+        solve();
+
+      j++;
     }
 
     return 0;

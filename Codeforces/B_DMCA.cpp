@@ -49,31 +49,48 @@ const ll mod = 1000000007;
 const int N = 3e5, M = N;
 //=================================================================================================================================//
 
+int sum(ll n)
+{
 
-void solve() {
-  ll i, j, n, k;
-   in(n);
+if(n<10)
+return n;
 
-  
+ll res=0;
+while(n>0)
+{
+  res +=n%10;
+
+  n /=10;
+}
 
 
-
+return res;
 
 }
+
+
+
 int main() {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    int test = 1;
-    cin >> test;
-    while(test--) {
-      solve();
-    }
+   
+   ll n;
+   cin>>n;
+
+ll res=n;
+
+while(res>=10)
+{
+
+res=sum(res);
+
+
+
+}
+   cout<<res<<endl;
+
+
 
     return 0;
 }
-
-
-
-
-

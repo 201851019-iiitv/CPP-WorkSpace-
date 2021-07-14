@@ -54,7 +54,38 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
+  string s;
+  cin>>s;
+
+ll res[n];
+res[0]=1;
+
+
+ll c;
+for(i=1;i<n;i++)
+{
+
+c=1;
+
+j=i-1;
+  while(j>=0 && s[j+1]>s[j])
+  {
+      j--;
+      c++;
+  }
   
+
+  
+
+   res[i]=c;
+
+}
+
+
+fo(i,n)
+cout<<res[i]<<" ";
+
+cout<<"\n";
 
 
 
@@ -64,10 +95,15 @@ int main() {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    int test = 1;
+    int test = 1,j=1;
     cin >> test;
     while(test--) {
-      solve();
+     
+      
+      cout<<"Case #"<<j<<":"<<" " ;
+        solve();
+
+      j++;
     }
 
     return 0;

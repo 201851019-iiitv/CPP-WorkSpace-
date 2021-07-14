@@ -54,8 +54,14 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
-  
+ k=(-1+sqrt(1+8*n))/2;
 
+  ll k2=(k*(k+1))/2;
+
+   if(k2<n)
+   prt(k+1);
+   else
+   prt(k);
 
 
 
@@ -65,7 +71,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

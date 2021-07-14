@@ -52,9 +52,50 @@ const int N = 3e5, M = N;
 
 void solve() {
   ll i, j, n, k;
-   in(n);
-
   
+  ll p,q,l,r;
+
+  cin>>p>>q>>l>>r;
+
+vector<pair<ll,ll>>v;
+vector<pair<ll,ll>>v1;
+
+ll a,b;
+  fo(i,p)
+  {
+
+      cin>>a>>b;
+      v.push_back({a,b});
+  }
+
+ fo(i,q)
+  {
+
+      cin>>a>>b;
+      v1.push_back({a,b});
+  }
+  
+
+sortall(v);
+sortall(v1);
+
+unordered_map<ll,ll>m;
+
+j=0;
+fo(i,q)
+{
+ 
+ if(v[i].first>v1[i].first)
+ {
+   m[v[i].first-v1[i].first]++;
+
+ }
+
+
+}
+
+
+
 
 
 

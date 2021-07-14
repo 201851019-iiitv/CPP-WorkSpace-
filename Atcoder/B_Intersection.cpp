@@ -54,9 +54,43 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
+
+ll arr[n];
+ll b[n];
+
+fo(i,n)
+cin>>arr[i];
+
+fo(i,n)
+cin>>b[i];
+
+
+ll minv=10000,maxv=0;
+
+fo(i,n)
+{
   
+  if(maxv<arr[i])
+  maxv=arr[i];
 
 
+}
+
+fo(i,n)
+{
+    if(minv>b[i])
+    minv=b[i];
+}
+
+//deb2(minv,maxv);
+  
+ll res;
+if(minv<maxv)
+res=0;
+else
+res=abs(minv-maxv)+1;
+
+prt(res);
 
 
 }
@@ -65,7 +99,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

@@ -49,12 +49,83 @@ const ll mod = 1000000007;
 const int N = 3e5, M = N;
 //=================================================================================================================================//
 
+ll rightcheck(ll arr[] ,ll i,ll diff,ll n)
+{
+
+ll c=0;
+while(i<n-1 && arr[i]-arr[i+1]==diff)
+{
+c++;
+
+}
+
+
+
+return c;
+}
+ll leftcheck(ll arr[] ,ll i,ll diff,ll n)
+{
+
+
+
+
+}
+
+
 
 void solve() {
   ll i, j, n, k;
    in(n);
 
-  
+ll arr[n];
+
+fo(i,n)
+cin>>arr[i];
+
+ll c,ld,rd,maxc=0,k1,k2,k3,k4;
+fo(i,n)
+{
+c=1;
+
+if(i==0)
+{
+rd=arr[i+1]-arr[i+2];
+c +=rightcheck(arr,i+1,rd,n);
+
+}
+
+else if(i==n-1)
+{
+ld=arr[n-2]-arr[n-3];
+c +=leftcheck(arr,i-1,ld,n);
+}
+else if(i>1|| i<n-2)
+{
+
+
+rd=arr[i+1]-arr[i+2];
+k1=leftcheck(arr,i-1,rd,n);
+k2=rightcheck(arr,i+1,rd,n);
+ld=arr[n-2]-arr[n-3];
+k3=leftcheck(arr,i-1,ld,n);
+k4=rightcheck(arr,i+1,ld,n);
+c +=max(k1+k2,k3+k4);
+
+}
+
+
+
+
+
+
+
+
+
+}
+
+
+cout<<maxc<<"\n";
+
 
 
 
@@ -64,10 +135,15 @@ int main() {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    int test = 1;
+    int test = 1,j=1;
     cin >> test;
     while(test--) {
-      solve();
+     
+      
+      cout<<"Case #"<<j<<":"<<" " ;
+        solve();
+
+      j++;
     }
 
     return 0;

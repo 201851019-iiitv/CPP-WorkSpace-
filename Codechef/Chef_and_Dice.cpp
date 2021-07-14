@@ -54,7 +54,46 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
-  
+ll res=0;
+
+if(n>=4)
+{
+
+
+
+   if(n%4==0)
+   {
+   res +=11*n+16;
+   cout<<res<<"\n";
+   return ;
+   }
+
+  //deb2(n,res);
+    if(n%4==1)
+    {
+     res +=11*(n-1)+32;
+
+    }
+   else if(n%4==2)
+   res +=11*(n-2)+44;
+  else
+   res +=11*(n-3)+55;
+
+
+
+cout<<res<<"\n";
+}
+else{
+
+  if(n==1)
+  prt(20);
+  else if(n==2)
+  prt(36);
+  else if(n==3)
+  prt(51);
+
+
+}
 
 
 

@@ -54,10 +54,14 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
-  
+ll res=1.08*n;
 
-
-
+if(res<206.0)
+prt("Yay!");
+else if(res==206.0)
+prt("so-so");
+else
+prt(":(");
 
 }
 int main() {
@@ -65,7 +69,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

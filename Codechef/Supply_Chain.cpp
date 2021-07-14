@@ -51,10 +51,22 @@ const int N = 3e5, M = N;
 
 
 void solve() {
-  ll i, j, n, k;
-   in(n);
+  ll i, j, n, k,l,m;
+ 
+
+ cin>>n>>k>>l>>m;
+
+ll c=0;
+ fo(i,n+1)
+ {
+
+   if(i%m!=0 &&(i%k==0 ||i%l==0))
+   c++;
+
+ }
 
   
+  prt(c);
 
 
 
@@ -65,7 +77,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

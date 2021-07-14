@@ -54,6 +54,26 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
+ll c=0;
+
+ll arr[n];
+fo(i,n)
+{
+cin>>arr[i];
+
+if(arr[i]==0)
+c++;
+
+}
+
+fo(i,c)
+cout<<0;
+
+fo(i,n-c)
+cout<<1;
+cout<<"\n";
+
+
   
 
 
@@ -65,7 +85,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+   cin >> test;
     while(test--) {
       solve();
     }

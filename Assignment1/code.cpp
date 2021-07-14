@@ -184,7 +184,7 @@ string res="";
    {
    
     res= getdatatypes(s,mp);
-    cout<<s<<"\t \t  "<<res<<"\n";
+    cout<<s<<"\t\t\t\t"<<res<<"\n";
 
    }
 

@@ -54,9 +54,77 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
+  ll arr[n];
+
+  fo(i,n)
+  cin>>arr[i];
+
+
+// sort(arr,arr+n);
+
+  unordered_map<ll,ll>mp;
   
+unordered_map<ll,bool>m1;
+
+  fo(i,n)
+  {
+      mp[arr[i]]++;
+
+     
+      //deb(arr[i]);
+
+  }
+
+  ll res=0;
+
+  for(auto &x:mp)
+  {
+    if(x.second>3)
+    {
+        k=(x.second-1);
+
+        res +=(k*(k-1)*(k-2))/6;
+    }
 
 
+  }
+
+ll a,b,c;
+  for(auto &x:mp)
+  {
+      for(auto &y:mp)
+      {
+
+       if(x.first!=y.first)
+       {
+          c=y.first-x.first;
+          
+          a=y.first+c;
+          b=a+c;
+          if(m1[a] && m1[b])
+          {
+
+              //deb2(res,"hh");
+
+              res +=(mp[a]*mp[b]*y.second*x.second);
+
+              //deb(res);
+          }
+
+
+
+
+       }
+
+      }
+       
+      m1[x.first]=true;
+
+  }
+
+
+
+prt(res/2);
 
 
 }
@@ -65,7 +133,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

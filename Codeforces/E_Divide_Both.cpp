@@ -52,7 +52,18 @@ const int N = 3e5, M = N;
 
 void solve() {
   ll i, j, n, k;
-   in(n);
+ll l,r;
+
+cin>>l>>r;
+ll res=0;
+for(i=2;i<=r-l;i+=2)
+{
+
+  res += ceil((r-l)/(double)i);
+    //deb(res);
+}
+
+prt(res*2);
 
   
 
@@ -65,7 +76,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

@@ -48,15 +48,53 @@ int rng(int lim) {
 const ll mod = 1000000007;
 const int N = 3e5, M = N;
 //=================================================================================================================================//
-
+//ipfl
+//lpfi
 
 void solve() {
   ll i, j, n, k;
-   in(n);
+   
+  cin>>n;
 
-  
+  string s,s1;
+
+  cin>>s;
+
+  cin>>k;
+
+  ll t,a,b;
+
+  fo(i,k)
+  {
+cin>>t>>a>>b;
+
+if(t==1)
+{
+
+    swap(s[a-1],s[b-1]);
+}
+
+else
+{
+    s1="";
+
+    s1 +=s.substr(n,n)+s.substr(0,n);
+
+    s=s1;
+    
+
+    //O(N)
+
+}
 
 
+
+
+  }
+
+
+
+prt(s);
 
 
 }
@@ -65,7 +103,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

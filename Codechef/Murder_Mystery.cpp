@@ -52,10 +52,40 @@ const int N = 3e5, M = N;
 
 void solve() {
   ll i, j, n, k;
-   in(n);
 
-  
+  string e,p;
+   cin>>e>>p;
 
+unordered_map<char,ll>m;
+unordered_map<char,ll>m1;
+
+fo(i,e.length())
+{
+
+  m[e[i]]++;
+
+}
+
+
+fo(i,p.length())
+{
+
+  m1[p[i]]++;
+
+}
+
+for(auto &x:m)
+{
+   if(m1[x.first]!=x.second)
+   {
+       cout<<"NO"<<"\n";
+       return ;
+   }
+
+
+}
+
+cout<<"YES"<<"\n";
 
 
 

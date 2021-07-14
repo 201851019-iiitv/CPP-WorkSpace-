@@ -53,7 +53,37 @@ const int N = 3e5, M = N;
 void solve() {
   ll i, j, n, k;
    in(n);
+ll arr[n];
 
+fo(i,n)
+cin>>arr[i];
+
+ll sum=0;
+
+fo(i,n)
+{
+    if(arr[i]==100)
+    sum +=10;
+  else if(arr[i]>95)
+  {
+      sum +=arr[i]%10;
+  }
+  else if(arr[i]>56 && arr[i]<=95)
+  {
+      sum +=5;
+  }
+  else
+  {
+      sum +=4;
+  }
+
+
+}
+
+
+double res=sum/(double)n;
+
+prt(res);
   
 
 

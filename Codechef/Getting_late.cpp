@@ -51,10 +51,37 @@ const int N = 3e5, M = N;
 
 
 void solve() {
-  ll i, j, n, k;
+  ll i, n;
+  double j, k;
    in(n);
 
-  
+  in(k);
+
+  k=k*60;
+
+  if(n%2==0)
+  {
+    j=(n/2)*1.5;
+
+    if(j>k)
+    prt("YES");
+    else
+    prt("NO");
+
+  }
+else{
+
+j=(n-1/2)*1.5;
+j +=1;
+
+ if(j>k)
+    prt("YES");
+    else
+    prt("NO");
+
+
+}
+
 
 
 

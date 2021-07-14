@@ -52,7 +52,86 @@ const int N = 3e5, M = N;
 
 void solve() {
   ll i, j, n, k;
-   in(n);
+  
+char s[3][3];
+
+int emptyPos=0;
+
+fo(i,3)
+{
+    fo(j,3)
+    {
+    cin>>s[i][j];
+    
+    if(s[i][j]=='_')
+    emptyPos++;
+
+    }
+}
+
+int res=3;
+int trueCountX=0;
+int trueCountO=0;
+
+
+// Row wise 
+for(int i=0;i<3;i++)
+{
+
+ if(s[i][0]=='X' && s[i][1]==s[i][2] && s[i][1]==s[i][0])
+ trueCountX++;
+else if(s[i][0]=='O' && s[i][1]==s[i][2] && s[i][1]==s[i][0])
+ trueCountO++;
+
+}
+
+
+// Column wise
+for(int i=0;i<3;i++)
+{
+
+ if(s[0][i]=='X' && s[1][i]==s[2][i] && s[1][i]==s[0][i])
+ trueCountX++;
+else if(s[0][i]=='O' && s[1][i]==s[2][i] && s[1][i]==s[0][i])
+ trueCountO++;
+
+}
+
+// Diagonallally check
+
+
+//* 00 -->11-->22
+if(s[0][0]=='X' && s[1][1]==s[0][0] && s[1][1]==s[2][2])
+trueCountX++;
+else if(s[0][0]=='O' && s[1][1]==s[0][0] && s[1][1]==s[2][2])
+ trueCountO++;
+
+
+//* 02 -->11 -->20
+if(s[0][2]=='X' && s[1][1]==s[0][2] && s[1][1]==s[2][0])
+trueCountX++;
+else if(s[0][2]=='O' && s[1][1]==s[0][2] && s[1][1]==s[2][0])
+ trueCountO++;
+
+
+
+
+//deb2(trueCountO,trueCountX);
+if(trueCountO>0 && trueCountX>0)
+cout<<3<<"\n";
+
+else if(trueCountO==1 || trueCountX==1)
+cout<<1<<"\n";
+
+else
+cout<<2<<"\n";
+
+
+
+
+
+
+
 
   
 

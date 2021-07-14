@@ -54,9 +54,23 @@ void solve() {
   ll i, j, n, k;
    in(n);
 
+unordered_map<ll,ll>cc;
+
+ll arr[n];
+fo(i,n)
+{
+    cin>>arr[i];
+    cc[arr[i]]++;
+}
   
+  ll res=0;
 
+  for(auto &x:cc)
+  {
+     res +=(n-x.second)*x.second;
+  }
 
+prt(res/2);
 
 
 }
@@ -65,7 +79,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

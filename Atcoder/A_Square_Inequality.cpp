@@ -52,7 +52,12 @@ const int N = 3e5, M = N;
 
 void solve() {
   ll i, j, n, k;
-   in(n);
+  cin>>n>>j>>k;
+
+  if(n*n+j*j<k*k)
+  prt("Yes");
+  else
+  prt("No");
 
   
 
@@ -65,7 +70,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }

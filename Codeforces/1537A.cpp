@@ -53,6 +53,22 @@ const int N = 3e5, M = N;
 void solve() {
   ll i, j, n, k;
    in(n);
+   ll arr[n];
+
+ll sum=0;
+fo(i,n)
+{
+cin>>arr[i];
+sum +=arr[i];
+}
+
+if(sum>=n)
+{
+    cout<<sum-n<<"\n";
+    return ;
+}
+
+cout<<1<<"\n";
 
   
 

@@ -49,12 +49,30 @@ const ll mod = 1000000007;
 const int N = 3e5, M = N;
 //=================================================================================================================================//
 
+void rec(ll i,ll n){
+
+  if(i>n)
+  return ;
+
+  if((i&1)==0)
+  {
+    cout<<i<<" ";
+    rec(i+1,n);
+  }
+  else{
+      cout<<10*ceil(i/2.0)<<" ";
+    rec(i+1,n);
+  }
+
+
+}
+
 
 void solve() {
   ll i, j, n, k;
    in(n);
 
-  
+  rec(1,n);
 
 
 
@@ -65,7 +83,7 @@ int main() {
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     int test = 1;
-    cin >> test;
+    //cin >> test;
     while(test--) {
       solve();
     }
